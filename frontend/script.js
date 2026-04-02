@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   createJobBtn.addEventListener("click", async (event) => {
     event.preventDefault(); // 🔥 prevents page reload
-    console.log("🔥 Create Job button CLICKED");
+    console.log("🔥 Create Job button CLICKED"); 
 
     const description = jobDescriptionInput.value.trim();
     if (!description) {

@@ -4,6 +4,7 @@ import uuid
 import httpx
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 # ------------------------------------
 # APP SETUP
@@ -18,6 +19,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Serve frontend folder
+app.mount("/frontend", StaticFiles(directory="frontend"), name="frontend")
 
 # ------------------------------------
 # DATABASE SETUP (SQLite)
@@ -36,7 +39,6 @@ conn.commit()
 # LM Studio endpoint
 LM_STUDIO_URL = "http://localhost:1234/v1/chat/completions"
 
-
 # ------------------------------------
 # CREATE JOB
 # ------------------------------------
@@ -54,7 +56,6 @@ async def create_job(job_description: str = Form(...)):
         "job_id": job_id,
         "job_description": job_description
     }
-
 
 # ------------------------------------
 # ANALYZE RESUME
