@@ -1,0 +1,15 @@
+# Databases
+jobs.db
+backend/jobs.db
+
+# Python cache
+__pycache__/
+backend/__pycache__/
+
+# Continue auto-generated noise
+.continue/agents/
+.continue/prompts/
+
+# VS Code workspace junk (optional)
+.vscode/
+

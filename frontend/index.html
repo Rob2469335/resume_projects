@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>HireFlow AI</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+        }
+
+        #output {
+            white-space: pre-wrap;
+            background: #f4f4f4;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 6px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>HireFlow AI</h1>
+
+    <h3>Job Description</h3>
+    <textarea id="jobDescription" placeholder="Paste job description here..."></textarea>
+    <button id="createJobBtn">Create Job</button>
+
+    <h3>Upload Resume</h3>
+    <input type="file" id="resumeInput" />
+    <button id="analyzeBtn">Analyze Resume</button>
+
+    <div id="output"></div>
+
+    <!-- Load your script AFTER the DOM so event listeners attach correctly -->
+    <script src="script.js"></script>
+</body>
+</html>
+
+
