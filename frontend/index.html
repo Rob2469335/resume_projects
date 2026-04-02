@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -24,6 +24,7 @@
             padding: 15px;
             margin-top: 20px;
             border-radius: 6px;
+            min-height: 120px;
         }
 
         button {
@@ -40,17 +41,14 @@
 
     <h3>Job Description</h3>
     <textarea id="jobDescription" placeholder="Paste job description here..."></textarea>
-    <button id="createJobBtn">Create Job</button>
+    <button id="createJobBtn" type="button">Create Job</button>
 
     <h3>Upload Resume</h3>
     <input type="file" id="resumeInput" />
-    <button id="analyzeBtn">Analyze Resume</button>
+    <button id="analyzeBtn" type="button">Analyze Resume</button>
 
-    <div id="output"></div>
+    <pre id="output"></pre>
 
-    <!-- Load your script AFTER the DOM so event listeners attach correctly -->
     <script src="script.js"></script>
 </body>
 </html>
-
-

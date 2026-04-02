@@ -44,7 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   // CREATE JOB
   // -------------------------------
-  createJobBtn.addEventListener("click", async () => {
+  createJobBtn.addEventListener("click", async (event) => {
+    event.preventDefault(); // 🔥 prevents page reload
     console.log("🔥 Create Job button CLICKED");
 
     const description = jobDescriptionInput.value.trim();
@@ -76,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       setOutput(`✅ Job created!\nJob ID: ${currentJobId}`, "success");
 
     } catch (err) {
+      console.error(err);
       setOutput("❌ Failed to create job. Is the backend running?", "error");
     } finally {
       setButtonLoading(createJobBtn, false);
@@ -85,7 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // -------------------------------
   // ANALYZE RESUME
   // -------------------------------
-  analyzeBtn.addEventListener("click", async () => {
+  analyzeBtn.addEventListener("click", async (event) => {
+    event.preventDefault(); // 🔥 prevents reload
     console.log("📄 Analyze Resume button CLICKED");
 
     if (!currentJobId) {
@@ -121,9 +124,11 @@ document.addEventListener("DOMContentLoaded", () => {
       setOutput(formatOutput(data), "success");
 
     } catch (err) {
+      console.error(err);
       setOutput("❌ Failed to analyze resume. Is the backend running?", "error");
     } finally {
       setButtonLoading(analyzeBtn, false);
     }
   });
 });
+  
