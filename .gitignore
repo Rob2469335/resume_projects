@@ -6,10 +6,20 @@ backend/jobs.db
 __pycache__/
 backend/__pycache__/
 
-# Continue auto-generated noise
+# Rust build and cache folders
+target/
+.cargo/
+.cache/
+
+# Continue auto-generated files
 .continue/agents/
 .continue/prompts/
 
-# VS Code workspace junk (optional)
+# VS Code workspace junk
 .vscode/
+*.code-workspace
+
+# OS and editor junk
+.DS_Store
+Thumbs.db
 
