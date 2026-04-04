@@ -43,7 +43,7 @@ logger = logging.getLogger("hireflow")
 # ---------------------------------------------------------------------------
 DATABASE_URL  = os.getenv("DATABASE_URL",  "sqlite:///./hireflow.db")
 OLLAMA_URL    = os.getenv("OLLAMA_URL",    "http://localhost:11434/api/generate")
-OLLAMA_MODEL  = os.getenv("OLLAMA_MODEL",  "llama3.2")          # change to your local model
+OLLAMA_MODEL  = os.getenv("OLLAMA_MODEL",  "llama3.2:latest")          # change to your local model
 OLLAMA_TIMEOUT = int(os.getenv("OLLAMA_TIMEOUT", "120"))        # seconds
 
 # Comma-separated list of allowed CORS origins, e.g. "http://localhost:5500,http://localhost:3000"
