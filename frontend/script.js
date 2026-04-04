@@ -1,134 +1,69 @@
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("🔥 HireFlow script loaded");
-
-  // -------------------------------
-  // DOM ELEMENTS
-  // -------------------------------
   const jobDescriptionInput = document.getElementById("jobDescription");
   const createJobBtn = document.getElementById("createJobBtn");
   const resumeInput = document.getElementById("resumeInput");
   const analyzeBtn = document.getElementById("analyzeBtn");
   const outputBox = document.getElementById("output");
 
-  // Backend URL
-  const API_BASE = "http://127.0.0.1:8000";
+  // Use the standard Localhost address
+  const API_BASE = "http://localhost:8000";
 
-  // -------------------------------
-  // STATE
-  // -------------------------------
   let currentJobId = null;
 
   // -------------------------------
-  // HELPERS
+  // CREATE JOB (Sending the "Order")
   // -------------------------------
-  function setOutput(message, status = "info") {
-    outputBox.textContent = message;
-    outputBox.dataset.status = status;
-  }
-
-  function setButtonLoading(btn, isLoading, loadingLabel = "Loading...") {
-    if (isLoading) {
-      btn.dataset.originalLabel = btn.textContent;
-      btn.textContent = loadingLabel;
-      btn.disabled = true;
-    } else {
-      btn.textContent = btn.dataset.originalLabel || btn.textContent;
-      btn.disabled = false;
-    }
-  }
-
-  function formatOutput(data) {
-    return JSON.stringify(data, null, 2);
-  }
-
-  // -------------------------------
-  // CREATE JOB
-  // -------------------------------
-  createJobBtn.addEventListener("click", async (event) => {
-    event.preventDefault(); // 🔥 prevents page reload
-    console.log("🔥 Create Job button CLICKED"); 
-
+  createJobBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
     const description = jobDescriptionInput.value.trim();
-    if (!description) {
-      setOutput("⚠️ Please enter a job description.", "error");
-      return;
-    }
+    
+    if (!description) return alert("Please enter a description!");
 
+    // MATCH CHECK: The backend looks for "job_description"
     const formData = new FormData();
-    formData.append("job_description", description);
+    formData.append("job_description", description); 
 
-    setButtonLoading(createJobBtn, true, "Creating...");
-    setOutput("Creating job...", "info");
+    outputBox.textContent = "Creating job...";
 
     try {
       const response = await fetch(`${API_BASE}/jobs`, {
-        method: "POST",
-        body: formData,
+          method: "POST", 
+          body: formData 
       });
-
-      if (!response.ok) {
-        setOutput(`❌ Failed to create job. Server said: ${response.status}`, "error");
-        return;
-      }
-
       const data = await response.json();
       currentJobId = data.job_id;
-
-      setOutput(`✅ Job created!\nJob ID: ${currentJobId}`, "success");
-
+      outputBox.textContent = `✅ Job Created! ID: ${currentJobId}`;
     } catch (err) {
-      console.error(err);
-      setOutput("❌ Failed to create job. Is the backend running?", "error");
-    } finally {
-      setButtonLoading(createJobBtn, false);
+      outputBox.textContent = "❌ Error: Is the Backend running?";
     }
   });
 
   // -------------------------------
-  // ANALYZE RESUME
+  // ANALYZE RESUME (The "Deep Dive")
   // -------------------------------
-  analyzeBtn.addEventListener("click", async (event) => {
-    event.preventDefault(); // 🔥 prevents reload
-    console.log("📄 Analyze Resume button CLICKED");
-
-    if (!currentJobId) {
-      setOutput("⚠️ Please create a job first.", "error");
-      return;
-    }
-
+  analyzeBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
     const file = resumeInput.files[0];
-    if (!file) {
-      setOutput("⚠️ Please upload a resume file.", "error");
-      return;
-    }
 
+    if (!currentJobId) return alert("Create a job first!");
+    if (!file) return alert("Upload a file!");
+
+    // MATCH CHECK: Backend looks for "job_id" and "file"
     const formData = new FormData();
     formData.append("job_id", currentJobId);
     formData.append("file", file);
 
-    setButtonLoading(analyzeBtn, true, "Analyzing...");
-    setOutput(`Analyzing resume for Job ID: ${currentJobId}...`, "info");
+    outputBox.textContent = "🤖 AI is analyzing... (Ollama is thinking)";
 
     try {
       const response = await fetch(`${API_BASE}/analyze`, {
-        method: "POST",
-        body: formData,
+          method: "POST",
+          body: formData
       });
-
-      if (!response.ok) {
-        setOutput(`❌ Failed to analyze resume. Server said: ${response.status}`, "error");
-        return;
-      }
-
       const data = await response.json();
-      setOutput(formatOutput(data), "success");
-
+      outputBox.textContent = JSON.stringify(data, null, 2);
     } catch (err) {
-      console.error(err);
-      setOutput("❌ Failed to analyze resume. Is the backend running?", "error");
-    } finally {
-      setButtonLoading(analyzeBtn, false);
+      outputBox.textContent = "❌ Analysis failed. Check Ollama!";
     }
   });
 });
-  
